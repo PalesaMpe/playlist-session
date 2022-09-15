@@ -31,8 +31,63 @@ function Login() {
 
   return (
     <div className="App">
+      <nav class="navbar navbar-expand-sm bg-light">
+        <a class="navbar-brand" href="#">
+          <h1>PLAYLIST SESSION</h1>
+        </a>
+
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarSupportedContent"
+        >
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">
+                HOME
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">
+                ABOUT
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">
+                CONTACT
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
       <header className="App-header1">
-        <h1>Spotify React</h1>
+        <form className="Auth-form">
+          <h3 className="Auth-form-title">Sign In</h3>
+          <div className="form-group mt-3">
+            <label>Email address</label>
+            <input
+              type="email"
+              className="form-control mt-1"
+              placeholder="Enter email"
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label>Password</label>
+            <input
+              type="password"
+              className="form-control mt-1"
+              placeholder="Enter password"
+            />
+          </div>
+          <div className="d-grid gap-2 mt-3">
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </div>
+          <p className="forgot-password text-right mt-2">
+            Forgot <a href="#">password?</a>
+          </p>
+        </form>
+
         {!token ? (
           <a
             href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state`}

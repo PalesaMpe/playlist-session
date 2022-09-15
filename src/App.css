@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #e9dac1;
+  background-color: #e8eae6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -50,9 +50,23 @@
   }
 }
 
-.trackContainer {
-  width: 300px;
+.container-fluid {
   position: relative;
-  right: 40%;
-  background-color: aquamarine;
+
+  left: 5%;
+}
+.navbar {
+  color: #61dafb;
+}
+.Auth-form {
+  text-align: left;
+  position: relative;
+  right: 30%;
+  border-radius: 10%;
+  background-color: wheat;
+  padding: 25px 50px;
+  margin-bottom: 1em;
+  font-size: 24px;
+  color: rgb(34, 34, 34);
+  font-weight: 800;
 }

@@ -7,12 +7,27 @@ function Main() {
   const [searchKey, setSearchKey] = useState("");
   const [Tracks, setTracks] = useState([]);
   const [playingTracks, setPlayingTracks] = useState([]);
+  const [profile, setProfile] = useState("");
 
   var token = window.localStorage.getItem("token");
   var arrTracks = [];
   var logout = () => {
     window.localStorage.removeItem("token");
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await axios.get("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setProfile(data);
+      console.log(data);
+    };
+
+    getUser();
+  }, []);
 
   const searchTracks = async (e) => {
     e.preventDefault();
@@ -26,14 +41,15 @@ function Main() {
       },
     });
 
+    console.log(data);
     setTracks(data.tracks.items);
     for (var i = 0; i <= Tracks.length - 1; i++) {
       arrTracks.push(Tracks[i].uri);
     }
     setPlayingTracks(arrTracks);
+    console.log(playingTracks);
   };
 
-  const calcTimeFrame = () => {};
   const renderTracks = () => {
     return Tracks.map((track) => (
       <div key={track.id}>
@@ -116,18 +132,23 @@ function Main() {
         </div>
       </nav>
       <header className="App-header">
+        <h1>WELCOME {profile.display_name}</h1>
         {token ? (
-          <form onSubmit={searchTracks}>
-            <input type="text" onChange={(e) => setSearchKey(e.target.value)} />
-            <button type="submit">Search</button>
-          </form>
+          <div>
+            <form onSubmit={searchTracks}>
+              <input
+                type="text"
+                onChange={(e) => setSearchKey(e.target.value)}
+              />
+              <button type="submit">Search</button>
+            </form>
+          </div>
         ) : (
           <h2>Please login</h2>
         )}
-        <div class="container-fluid p-3 my-3 border bg-primary">
+        <div class="container-fluid h-55 ms-0 p-3 border bg-primary">
           {renderTracks()}
           <Player accessToken={token} trackUri={playingTracks} />
-          <h2>{playingTracks}</h2>
         </div>
 
         <Link to="/Login">
