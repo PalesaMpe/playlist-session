@@ -1,20 +1,27 @@
-const express = require("express");
 const mysql = require("mysql");
-
+const express = require("express");
 const app = express();
+const bodyparser = require("body-parser");
+const bodyParser = require("body-parser");
 
-const db = mysql.createPool({
+const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "Pale@Mpe76",
-  database: "db_handler",
+  password: "password",
+  database: "dbhandler",
 });
-app.get("/", (req, res) => {
-  const sqlInsert = "INSERT INTO users1 (id, name) VALUES (2,'Palesa');";
-  db.query(sqlInsert, (err, result) => {
-    res.send("hello world");
+
+db.connect((err) => {
+  if (!err) console.log("success");
+  else console.log("failed");
+});
+
+app.listen(3000, () => console.log("server is running on port 3000"));
+
+app.get("/users", (req, res) => {
+  const sqlInsert = "INSERT INTO new_table (Name) VALUES ('meee')";
+  db.query(sqlInsert, (err, rows, fields) => {
+    if (!err) console.log(rows);
+    else console.log(err);
   });
-});
-app.listen(3001, () => {
-  console.log("Running on port 3001");
 });

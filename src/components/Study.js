@@ -3,19 +3,38 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Player from "./Player";
 
-function Main() {
+function Study() {
+  const CLIENT_ID = "db03438a98c64224a6e4861ebf1b226e";
+  const REDIRECT_URI = "http://localhost:3000";
+  const AUTH_ENDPOINT = "http://accounts.spotify.com/authorize";
+  const RESPONSE_TYPE = "token";
+
+  const [token, setToken] = useState("");
   const [searchKey, setSearchKey] = useState("");
   const [Tracks, setTracks] = useState([]);
   const [playingTracks, setPlayingTracks] = useState([]);
   const [profile, setProfile] = useState("");
-
-  var token = window.localStorage.getItem("token");
+  const [playlists, setPlaylists] = useState(["classical essential", "tester"]);
+  const [defaultPlay, setDefault] = playlists[1];
+  const [playlistUrl, setPlaylistUrl] = useState("");
   var arrTracks = [];
-  var logout = () => {
-    window.localStorage.removeItem("token");
-  };
-
+  var arrPlaylists = ["classical essential", "tester"];
   useEffect(() => {
+    const hash = window.location.hash;
+    let token = window.localStorage.getItem("token");
+
+    if (!token && hash) {
+      token = hash
+        .substring(1)
+        .split("&")
+        .find((elem) => elem.startsWith("access_token"))
+        .split("=")[1];
+
+      window.location.hash = "";
+      window.localStorage.setItem("token", token);
+    }
+    setToken(token);
+
     const getUser = async () => {
       const { data } = await axios.get("https://api.spotify.com/v1/me", {
         headers: {
@@ -29,32 +48,49 @@ function Main() {
     getUser();
   }, []);
 
-  const searchTracks = async (e) => {
+  const searchPlaylists = async (e) => {
     e.preventDefault();
     const { data } = await axios.get("https://api.spotify.com/v1/search", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
       params: {
-        q: searchKey,
-        type: "track",
+        q: arrPlaylists[0],
+        type: "playlist",
       },
     });
+    console.log(data.playlists.items);
+    setPlaylistUrl(data.playlists.items[0].id);
 
-    console.log(data);
-    setTracks(data.tracks.items);
-    for (var i = 0; i <= Tracks.length - 1; i++) {
-      arrTracks.push(Tracks[i].uri);
-    }
-    setPlayingTracks(arrTracks);
-    console.log(playingTracks);
+    searchTrack();
+    //  console.log(playingTracks);
   };
 
+  const searchTrack = async () => {
+    console.log(token);
+    console.log(playlistUrl);
+    const { data } = await axios.get(
+      `	https://api.spotify.com/v1/playlists/${playlistUrl}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // console.log(data.tracks.items);
+    setTracks(data.tracks.items);
+    for (var i = 0; i <= Tracks.length - 1; i++) {
+      arrTracks.push(Tracks[i].track.uri);
+    }
+    setPlayingTracks(arrTracks);
+    // console.log(playingTracks);
+  };
   const renderTracks = () => {
     return Tracks.map((track) => (
-      <div key={track.id}>
-        {track.album.images.length ? (
-          <img width={"2%"} src={track.album.images[0].url} alt="" />
+      <div key={track.track.id}>
+        {track.track.album.images.length ? (
+          <img width={"15%"} src={track.track.album.images[0].url} alt="" />
         ) : (
           <div>No Image</div>
         )}
@@ -63,6 +99,9 @@ function Main() {
     ));
   };
 
+  var logout = () => {
+    window.localStorage.removeItem("token");
+  };
   return (
     <div className="App">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -133,21 +172,50 @@ function Main() {
       </nav>
       <header className="App-header">
         <h1>WELCOME {profile.display_name}</h1>
-        {token ? (
-          <div>
-            <Link to="/Study">
-              <button>Study</button>
-            </Link>
-
-            <button>Travel</button>
-            <button>Exercise</button>
+        {!token ? (
+          <div className="spotifyLink">
+            CONNECT WITH
+            <a
+              href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state`}
+            >
+              SPOTIFY
+            </a>
           </div>
         ) : (
-          <h2>Please login</h2>
+          <div></div>
         )}
+
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6">
+              <div>
+                <form onSubmit={searchPlaylists}>
+                  <input
+                    type="text"
+                    onChange={(e) => setSearchKey(e.target.value)}
+                  />
+                  <button type="submit">Search</button>
+                </form>
+              </div>
+              <div className="display">
+                {renderTracks()}
+                <Player accessToken={token} trackUri={playingTracks} />
+              </div>
+            </div>{" "}
+            <div className="col-lg-6">
+              <div>
+                <button type="submit">Generate</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <Link to="/Login">
+          <button onClick={logout}>Logout</button>
+        </Link>
       </header>
     </div>
   );
 }
 
-export default Main;
+export default Study;

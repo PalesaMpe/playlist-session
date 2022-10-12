@@ -1,32 +1,51 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.col-1 {
+  width: 8.33%;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.col-2 {
+  width: 16.66%;
+}
+.col-3 {
+  width: 25%;
+}
+.col-4 {
+  width: 33.33%;
+}
+.col-5 {
+  width: 41.66%;
+}
+.col-6 {
+  width: 50%;
+}
+.col-7 {
+  width: 58.33%;
+}
+.col-8 {
+  width: 66.66%;
+}
+.col-9 {
+  width: 75%;
+}
+.col-10 {
+  width: 83.33%;
+}
+.col-11 {
+  width: 91.66%;
+}
+.col-12 {
+  width: 100%;
+}
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+  border: 1px solid red;
 }
 
 .App-header {
-  background-color: #e8eae6;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: black;
-}
-.App-header1 {
-  background-image: url("/src/images/music3.jpg");
-  background-repeat: no-repeat;
   background-size: cover;
+  background-image: url("./images/music3.jpg");
   background-color: #e9dac1;
   min-height: 100vh;
   display: flex;
@@ -52,7 +71,8 @@
 
 .container-fluid {
   position: relative;
-
+  font-size: small;
+  background-color: grey;
   left: 5%;
 }
 .navbar {
@@ -63,10 +83,19 @@
   position: relative;
   right: 30%;
   border-radius: 10%;
-  background-color: wheat;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(1.5px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   padding: 25px 50px;
-  margin-bottom: 1em;
+
   font-size: 24px;
   color: rgb(34, 34, 34);
-  font-weight: 800;
+  font-weight: bold;
+  width: 25%;
+  height: 50%;
+}
+
+.title {
+  font-size: 65px;
+  font-family: "Dancing Script", cursive;
 }

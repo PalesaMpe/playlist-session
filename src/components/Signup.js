@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-function Login() {
+function Signup() {
   const CLIENT_ID = "db03438a98c64224a6e4861ebf1b226e";
   const REDIRECT_URI = "http://localhost:3000";
   const AUTH_ENDPOINT = "http://accounts.spotify.com/authorize";
@@ -60,7 +60,7 @@ function Login() {
         </div>
       </nav>
       <header className="App-header">
-        <form className="Auth-form m-5">
+        <form className="Auth-form right">
           <h1 className="title">Sign In</h1>
           <div className="form-group mt-3">
             <label>Email address</label>
@@ -75,7 +75,6 @@ function Login() {
             <input
               type="password"
               className="form-control mt-1"
-              id="lg"
               placeholder="Enter password"
             />
           </div>
@@ -86,10 +85,6 @@ function Login() {
           </div>
           <p className="forgot-password text-right mt-2">
             Forgot <a href="#">password?</a>
-          </p>
-          <p className="text-right mt-2">
-            Need an account?
-            <a href="/Signup">Sign Up</a>
           </p>
         </form>
 
@@ -114,4 +109,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;
