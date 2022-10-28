@@ -6,7 +6,7 @@ import Note from "./Note";
 import Header from "./Header";
 import NoteList from "./NoteList";
 
-function Study() {
+function Travel() {
   const CLIENT_ID = "db03438a98c64224a6e4861ebf1b226e";
   const REDIRECT_URI = "http://localhost:3000";
   const AUTH_ENDPOINT = "http://accounts.spotify.com/authorize";
@@ -158,9 +158,9 @@ function Study() {
   return (
     <div className="App">
       <Header />
-
       <header className="App-header">
         <h1>WELCOME {profile.display_name}</h1>
+
         <div className="container conn1">
           <div className="row">
             <div className="col-lg-6">
@@ -270,4 +270,4 @@ function Study() {
   );
 }
 
-export default Study;
+export default Travel;

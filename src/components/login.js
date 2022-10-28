@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import ImageSlider from "./ImageSlider";
 
 function Login() {
   const CLIENT_ID = "db03438a98c64224a6e4861ebf1b226e";
@@ -9,13 +9,15 @@ function Login() {
   const RESPONSE_TYPE = "token";
 
   const [token, setToken] = useState("");
+  const [users, setUsers] = useState([]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
 
     if (!token && hash) {
-      console.log("dsgfd");
       token = hash
         .substring(1)
         .split("&")
@@ -29,9 +31,37 @@ function Login() {
     setToken(token);
   }, []);
 
+  const getUser = async (e) => {
+    e.preventDefault();
+    axios.get("http://localhost:3001/users").then((response) => {
+      console.log(response.data);
+      setUsers(response.data);
+    });
+  };
+
+  const checkUser = async (e) => {
+    e.preventDefault();
+    for (var i = 0; i <= users.length - 1; i++) {
+      if (email == users[i].Email && password == users[i].Password) {
+        console.log("VALID");
+        window.localStorage.setItem(
+          "user",
+          JSON.stringify({
+            id: users[i].id,
+            name: users[i].Name,
+            surname: users[i].Surname,
+            email: users[i].Email,
+          })
+        );
+        window.location.href = "http://localhost:3000/main";
+        break;
+      }
+    }
+  };
+
   return (
     <div>
-      <nav class="navbar navbar-expand-sm bg-light">
+      <nav class="navbar navbar-expand-sm">
         <a class="navbar-brand" href="#">
           <h1>PLAYLIST SESSION</h1>
         </a>
@@ -59,57 +89,65 @@ function Login() {
           </ul>
         </div>
       </nav>
-      <header className="App-header">
-        <form className="Auth-form m-5">
-          <h1 className="title">Sign In</h1>
-          <div className="form-group mt-3">
-            <label>Email address</label>
-            <input
-              type="email"
-              className="form-control mt-1"
-              placeholder="Enter email"
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control mt-1"
-              id="lg"
-              placeholder="Enter password"
-            />
-          </div>
-          <div className="d-grid gap-2 mt-3">
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </div>
-          <p className="forgot-password text-right mt-2">
-            Forgot <a href="#">password?</a>
-          </p>
-          <p className="text-right mt-2">
-            Need an account?
-            <a href="/Signup">Sign Up</a>
-          </p>
-        </form>
 
-        {!token ? (
-          <a
-            href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state`}
-          >
-            Register with Spotify
-          </a>
-        ) : (
-          <div>
-            <Link to="/Main">
-              <button>Study</button>
-            </Link>
+      <div className="container con2">
+        <div className="row">
+          <div className="col-lg-6">
+            <div className="form-base p-3">
+              <form className="Auth-form">
+                <h1 className="title">Hello!</h1>
+                <p className="greeting">We are happy to see you again!</p>
+                <div className="form-group mt-3">
+                  <label>Email address</label>
+                  <input
+                    type="email"
+                    className="form-control mt-1"
+                    placeholder="Enter email"
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="form-group mt-3">
+                  <label>Password</label>
+                  <input
+                    type="password"
+                    className="form-control mt-1"
+                    id="lg"
+                    placeholder="Enter password"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="d-grid gap-2 mt-3">
+                  <button type="submit" className="loginBtn" onClick={getUser}>
+                    Submit
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    onClick={checkUser}
+                  >
+                    Check
+                  </button>
 
-            <button>Travel</button>
-            <button>Exercise</button>
+                  {users.map((val, key) => {
+                    return <div>{val.Email}</div>;
+                  })}
+                </div>
+                <p className="forgot-password text-right mt-2">
+                  Forgot <a href="#">password?</a>
+                </p>
+                <p className="text-right mt-2">
+                  Need an account?
+                  <a href="/Signup">Sign Up</a>
+                </p>
+              </form>
+            </div>
           </div>
-        )}
-      </header>
+        </div>
+      </div>
     </div>
   );
 }

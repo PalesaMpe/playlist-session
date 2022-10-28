@@ -6,7 +6,7 @@ import Note from "./Note";
 import Header from "./Header";
 import NoteList from "./NoteList";
 
-function Study() {
+function Exercise() {
   const CLIENT_ID = "db03438a98c64224a6e4861ebf1b226e";
   const REDIRECT_URI = "http://localhost:3000";
   const AUTH_ENDPOINT = "http://accounts.spotify.com/authorize";
@@ -27,7 +27,21 @@ function Study() {
   window.localStorage.setItem("currentPage", currentPage);
 
   useEffect(() => {
+    const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
+
+    if (!token && hash) {
+      token = hash
+        .substring(1)
+        .split("&")
+        .find((elem) => elem.startsWith("access_token"))
+        .split("=")[1];
+
+      window.location.hash = "";
+      window.localStorage.setItem("token", token);
+    }
+    setToken(token);
+
     const getUser = async () => {
       const { data } = await axios.get("https://api.spotify.com/v1/me", {
         headers: {
@@ -37,9 +51,8 @@ function Study() {
       setProfile(data);
       console.log(data);
     };
-    if (token) {
-      getUser();
-    }
+
+    getUser();
   }, []);
 
   const toMilliseconds = (time) => {
@@ -158,9 +171,9 @@ function Study() {
   return (
     <div className="App">
       <Header />
-
       <header className="App-header">
         <h1>WELCOME {profile.display_name}</h1>
+
         <div className="container conn1">
           <div className="row">
             <div className="col-lg-6">
@@ -270,4 +283,4 @@ function Study() {
   );
 }
 
-export default Study;
+export default Exercise;

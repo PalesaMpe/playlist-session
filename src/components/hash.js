@@ -8,7 +8,6 @@ function Hash() {
     let token = window.localStorage.getItem("token");
 
     if (!token && hash) {
-      console.log("dsgfd");
       token = hash
         .substring(1)
         .split("&")
@@ -19,7 +18,7 @@ function Hash() {
       window.localStorage.setItem("token", token);
     }
 
-    window.location.href = "Main";
+    window.location.href = window.localStorage.getItem("currentPage");
   }, []);
 }
 

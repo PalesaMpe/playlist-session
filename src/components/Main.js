@@ -4,64 +4,33 @@ import { Link } from "react-router-dom";
 import Player from "./Player";
 
 function Main() {
+  const [token, setToken] = useState("");
   const [searchKey, setSearchKey] = useState("");
   const [Tracks, setTracks] = useState([]);
   const [playingTracks, setPlayingTracks] = useState([]);
   const [profile, setProfile] = useState("");
 
-  var token = window.localStorage.getItem("token");
-  var arrTracks = [];
-  var logout = () => {
-    window.localStorage.removeItem("token");
-  };
+  var currentPage = "/Main";
+  window.localStorage.setItem("currentPage", currentPage);
 
   useEffect(() => {
-    const getUser = async () => {
-      const { data } = await axios.get("https://api.spotify.com/v1/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setProfile(data);
-      console.log(data);
-    };
+    const hash = window.location.hash;
+    let token = window.localStorage.getItem("token");
 
-    getUser();
-  }, []);
+    console.log(window.localStorage.getItem("user"));
+    if (!token && hash) {
+      token = hash
+        .substring(1)
+        .split("&")
+        .find((elem) => elem.startsWith("access_token"))
+        .split("=")[1];
 
-  const searchTracks = async (e) => {
-    e.preventDefault();
-    const { data } = await axios.get("https://api.spotify.com/v1/search", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      params: {
-        q: searchKey,
-        type: "track",
-      },
-    });
-
-    console.log(data);
-    setTracks(data.tracks.items);
-    for (var i = 0; i <= Tracks.length - 1; i++) {
-      arrTracks.push(Tracks[i].uri);
+      window.location.hash = "";
+      window.localStorage.setItem("token", token);
     }
-    setPlayingTracks(arrTracks);
-    console.log(playingTracks);
-  };
 
-  const renderTracks = () => {
-    return Tracks.map((track) => (
-      <div key={track.id}>
-        {track.album.images.length ? (
-          <img width={"2%"} src={track.album.images[0].url} alt="" />
-        ) : (
-          <div>No Image</div>
-        )}
-        {track.name}
-      </div>
-    ));
-  };
+    setToken(token);
+  }, []);
 
   return (
     <div className="App">
@@ -131,21 +100,46 @@ function Main() {
           </form>
         </div>
       </nav>
-      <header className="App-header">
-        <h1>WELCOME {profile.display_name}</h1>
-        {token ? (
-          <div>
-            <Link to="/Study">
-              <button>Study</button>
-            </Link>
 
-            <button>Travel</button>
-            <button>Exercise</button>
+      <div className="container">
+        <div className="test1">
+          <div className="row">
+            <div className="col-lg-4">
+              <form>
+                <Link to="/Study">
+                  <button className="activityBtn">Study</button>
+                </Link>
+              </form>
+              <img
+                className="activityBackground"
+                src={require("./music2.jpg")}
+              />
+            </div>
+            <div className="col-lg-4">
+              <form>
+                <Link to="/Travel">
+                  <button className="activityBtn">Travel</button>
+                </Link>
+              </form>
+              <img
+                className="activityBackground"
+                src={require("./music2.jpg")}
+              />
+            </div>
+            <div className="col-lg-4">
+              <form>
+                <Link to="/Exercise">
+                  <button className="activityBtn">Exercise</button>
+                </Link>
+              </form>
+              <img
+                className="activityBackground"
+                src={require("./music2.jpg")}
+              />
+            </div>
           </div>
-        ) : (
-          <h2>Please login</h2>
-        )}
-      </header>
+        </div>
+      </div>
     </div>
   );
 }

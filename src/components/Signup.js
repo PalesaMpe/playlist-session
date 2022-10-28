@@ -1,109 +1,106 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import NavigationBar from "./NavigationBar";
+import ImageSlider from "./ImageSlider";
 
 function Signup() {
-  const CLIENT_ID = "db03438a98c64224a6e4861ebf1b226e";
-  const REDIRECT_URI = "http://localhost:3000";
-  const AUTH_ENDPOINT = "http://accounts.spotify.com/authorize";
-  const RESPONSE_TYPE = "token";
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [token, setToken] = useState("");
-
-  useEffect(() => {
-    const hash = window.location.hash;
-    let token = window.localStorage.getItem("token");
-
-    if (!token && hash) {
-      console.log("dsgfd");
-      token = hash
-        .substring(1)
-        .split("&")
-        .find((elem) => elem.startsWith("access_token"))
-        .split("=")[1];
-
-      window.location.hash = "";
-      window.localStorage.setItem("token", token);
-    }
-
-    setToken(token);
-  }, []);
+  const addUser = async (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/addMe", {
+        name: name,
+        surname: surname,
+        email: email,
+        password: password,
+      })
+      .then(() => {
+        console.log("successes");
+      });
+  };
 
   return (
     <div>
-      <nav class="navbar navbar-expand-sm bg-light">
-        <a class="navbar-brand" href="#">
-          <h1>PLAYLIST SESSION</h1>
-        </a>
-
-        <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarSupportedContent"
-        >
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">
-                <h5>HOME</h5>
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">
-                <h5>ABOUT</h5>
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">
-                <h5>CONTACT</h5>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <NavigationBar />
       <header className="App-header">
-        <form className="Auth-form right">
-          <h1 className="title">Sign In</h1>
-          <div className="form-group mt-3">
-            <label>Email address</label>
-            <input
-              type="email"
-              className="form-control mt-1"
-              placeholder="Enter email"
-            />
+        <div className="container">
+          <div className="form-base">
+            <div className="row">
+              <div className="col-lg-6">
+                <form className="Auth-form">
+                  <h1 className="title">Sign Up</h1>
+                  <div className="form-group mt-3">
+                    <label>Name</label>
+                    <input
+                      type="name"
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                      className="form-control mt-1"
+                      placeholder="Enter name"
+                    />
+                  </div>
+                  <div className="form-group mt-3">
+                    <label>Surname</label>
+                    <input
+                      type="surname"
+                      onChange={(e) => {
+                        setSurname(e.target.value);
+                      }}
+                      className="form-control mt-1"
+                      placeholder="Enter surname"
+                    />
+                  </div>
+                  <div className="form-group mt-3">
+                    <label>Email address</label>
+                    <input
+                      type="email"
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                      className="form-control mt-1"
+                      placeholder="Enter email"
+                    />
+                  </div>
+                  <div className="form-group mt-3">
+                    <label>Password</label>
+                    <input
+                      type="password"
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                      className="form-control mt-1"
+                      placeholder="Enter password"
+                    />
+                  </div>
+                  <div className="d-grid gap-2 mt-3">
+                    <button
+                      type="submit"
+                      className="loginBtn"
+                      onClick={addUser}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div className="col-lg-6">
+                <form className="Info-form m-2">
+                  <ImageSlider
+                    slides={["./music1.jpg", "./music1.jpg", "./music1.jpg"]}
+                  />
+                </form>
+                <a className="prev">&#10094;</a>
+                <a className="next">&#10095;</a>
+              </div>
+            </div>
           </div>
-          <div className="form-group mt-3">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control mt-1"
-              placeholder="Enter password"
-            />
-          </div>
-          <div className="d-grid gap-2 mt-3">
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </div>
-          <p className="forgot-password text-right mt-2">
-            Forgot <a href="#">password?</a>
-          </p>
-        </form>
-
-        {!token ? (
-          <a
-            href={`${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state`}
-          >
-            Register with Spotify
-          </a>
-        ) : (
-          <div>
-            <Link to="/Main">
-              <button>Study</button>
-            </Link>
-
-            <button>Travel</button>
-            <button>Exercise</button>
-          </div>
-        )}
+        </div>
       </header>
     </div>
   );
