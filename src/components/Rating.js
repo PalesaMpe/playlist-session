@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 
-function Info() {
+function Rating() {
   const [showSubscribe, setShowSubscribe] = useState(false);
   const [showEnquiry, setShowEnquiry] = useState(false);
   const [showRating, setShowRating] = useState(false);
+  const [enquiry, setEnquiry] = useState("");
 
+  var date = new Date().toLocaleDateString();
   var id = JSON.parse(window.localStorage.getItem("user")).id;
   var name = JSON.parse(window.localStorage.getItem("user")).name;
   var surname = JSON.parse(window.localStorage.getItem("user")).surname;
@@ -20,6 +22,23 @@ function Info() {
         name: name,
         surname: surname,
         email: email,
+      })
+      .then(() => {
+        console.log("successes");
+      });
+  };
+  const addEnquiry = async (e) => {
+    e.preventDefault();
+    console.log(name);
+    axios
+      .post("http://localhost:3001/addEnquiry", {
+        enquiryID: 0,
+        enquiry: enquiry,
+        userID: id,
+        name: name,
+        surname: surname,
+        email: email,
+        dateSubmitted: date,
       })
       .then(() => {
         console.log("successes");
@@ -41,24 +60,25 @@ function Info() {
     <div className="container con2">
       <div className="row">
         <div className="col-lg-6">
-          <form className="InfoDisplay">
-            <p>
-              At vero eos et accusamus et iusto odio dignissimos ducimus qui
-              blanditiis praesentium voluptatum deleniti atque corrupti quos
-              dolores et quas molestias excepturi sint occaecati cupiditate non
-              provident, similique sunt in culpa qui officia deserunt mollitia
-              animi, id est laborum et dolorum fuga. Et harum quidem rerum
-              facilis est et expedita distinctio. Nam libero tempore, cum soluta
-              nobis est eligendi optio cumque nihil impedit quo minus id quod
-              maxime placeat facere possimus, omnis voluptas assumenda est,
-              omnis dolor repellendus. Temporibus autem quibusdam et aut
-              officiis debitis aut rerum necessitatibus saepe eveniet ut et
-              voluptates repudiandae sint et molestiae non recusandae. Itaque
-              earum rerum hic tenetur a sapiente delectus, ut aut reiciendis
-              voluptatibus maiores alias consequatur aut perferendis doloribus
-              asperiores repella
-            </p>
-          </form>
+          <button className="ButtonDisplay" onClick={showEnquiryForm}>
+            <p>Enquiry</p>
+          </button>
+          {showEnquiry && (
+            <form className="InfoDisplay">
+              <label>Email: {email}</label>
+              <br />
+              <textarea
+                onChange={(e) => {
+                  setEnquiry(e.target.value);
+                }}
+              ></textarea>{" "}
+              <div className="d-grid gap-2 mt-3">
+                <button type="submit" className="loginBtn" onClick={addEnquiry}>
+                  Submit
+                </button>
+              </div>
+            </form>
+          )}
         </div>
         <div className="col-lg-6">
           <button className="ButtonDisplay" onClick={showSubscribeForm}>
@@ -66,42 +86,12 @@ function Info() {
           </button>
           {showSubscribe && (
             <form className="InfoDisplay">
-              <div className="form-group mt-3">
-                <label>Enter email address</label>
-                <input
-                  type="email"
-                  className="form-control mt-1"
-                  placeholder="Enter email"
-                />
-              </div>
-
               <div className="d-grid gap-2 mt-3">
                 <button
                   type="submit"
                   className="loginBtn"
                   onClick={addSubscriber}
                 >
-                  Subscribe
-                </button>
-              </div>
-            </form>
-          )}
-          <button className="ButtonDisplay" onClick={showEnquiryForm}>
-            <p>Enquiry</p>
-          </button>
-          {showEnquiry && (
-            <form className="InfoDisplay">
-              <div className="form-group mt-3">
-                <label>Enter email address</label>
-                <input
-                  type="email"
-                  className="form-control mt-1"
-                  placeholder="Enter email"
-                />
-              </div>
-
-              <div className="d-grid gap-2 mt-3">
-                <button type="submit" className="loginBtn">
                   Subscribe
                 </button>
               </div>
@@ -154,4 +144,4 @@ function Info() {
   );
 }
 
-export default Info;
+export default Rating;

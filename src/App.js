@@ -5,8 +5,11 @@ import Hash from "./components/hash";
 import Study from "./components/Study";
 import Travel from "./components/Travel";
 import Exercise from "./components/Exercise";
-import Info from "./components/Info";
+import Contact from "./components/Contact";
 
+import Admin from "./components/Administrator/Admin";
+import Update from "./components/Administrator/Update";
+import Enquiry from "./components/Administrator/Enquiry";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
@@ -17,8 +20,12 @@ function App() {
         <Routes>
           <Route path="Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
+          <Route path="/Admin" element={<Admin />} />
+
+          <Route path="/Update" element={<Update />} />
           <Route path="*" element={<Hash />} />
-          <Route path="/Info" element={<Info />} />
+          <Route path="/Contact" element={<Contact />} />
+          <Route path="/Enquiry" element={<Enquiry />} />
 
           <Route path="/Main" element={<Main />} />
           <Route path="/Study" element={<Study />} />

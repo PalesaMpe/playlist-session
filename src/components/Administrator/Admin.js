@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import ImageSlider from "./ImageSlider";
+import ImageSlider from "../ImageSlider";
 import { Link } from "react-router-dom";
 
-function Login() {
+function Admin() {
   const CLIENT_ID = "db03438a98c64224a6e4861ebf1b226e";
   const REDIRECT_URI = "http://localhost:3000";
   const AUTH_ENDPOINT = "http://accounts.spotify.com/authorize";
@@ -54,14 +54,14 @@ function Login() {
             email: users[i].Email,
           })
         );
-        window.location.href = "http://localhost:3000/main";
+        window.location.href = "http://localhost:3000/Update";
         break;
       }
     }
   };
 
   return (
-    <div>
+    <div className="AdminPage">
       <nav class="navbar navbar-expand-sm">
         <a class="navbar-brand" href="#">
           <h1>PLAYLIST SESSION</h1>
@@ -90,69 +90,63 @@ function Login() {
           </ul>
         </div>
       </nav>
-      <div className="container con2">
+      <div className="container">
         <div className="row">
           <div className="col-lg-6">
-            <div className="form-base p-3">
-              <form className="Auth-form">
-                <h1 className="title">Hello!</h1>
-                <p className="greeting">We are happy to see you again!</p>
-                <div className="form-group mt-3">
-                  <label>Email address</label>
-                  <input
-                    type="email"
-                    className="form-control mt-1"
-                    placeholder="Enter email"
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="form-group mt-3">
-                  <label>Password</label>
-                  <input
-                    type="password"
-                    className="form-control mt-1"
-                    id="lg"
-                    placeholder="Enter password"
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                  />
-                </div>
-                <div className="d-grid gap-2 mt-3">
-                  <button type="submit" className="loginBtn" onClick={getUser}>
-                    Submit
-                  </button>
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    onClick={checkUser}
-                  >
-                    Check
-                  </button>
+            <form className="Auth-form">
+              <h1 className="title">Admin</h1>
+              <div className="form-group mt-3">
+                <label>Email address</label>
+                <input
+                  type="email"
+                  className="form-control mt-1"
+                  placeholder="Enter email"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="form-group mt-3">
+                <label>Password</label>
+                <input
+                  type="password"
+                  className="form-control mt-1"
+                  id="lg"
+                  placeholder="Enter password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="d-grid gap-2 mt-3">
+                <button type="submit" className="loginBtn" onClick={getUser}>
+                  Submit
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={checkUser}
+                >
+                  Check
+                </button>
 
-                  {users.map((val, key) => {
-                    return <div>{val.Email}</div>;
-                  })}
-                </div>
-                <p className="forgot-password text-right mt-2">
-                  Forgot <a href="#">password?</a>
-                </p>
-                <p className="text-right mt-2">
-                  Need an account?
-                  <a href="/Signup">Sign Up</a>
-                </p>
-              </form>
-            </div>
+                {users.map((val, key) => {
+                  return <div>{val.Email}</div>;
+                })}
+              </div>
+              <p className="forgot-password text-right mt-2">
+                Forgot <a href="#">password?</a>
+              </p>
+              <p className="text-right mt-2">
+                Need an account?
+                <a href="/Signup">Sign Up</a>
+              </p>
+            </form>
           </div>
         </div>
       </div>
-      <Link to="/Admin">
-        <button>login</button>
-      </Link>
     </div>
   );
 }
 
-export default Login;
+export default Admin;

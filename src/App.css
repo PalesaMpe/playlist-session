@@ -1,8 +1,11 @@
+html,
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
+}
+body {
   box-sizing: border-box;
-
   background: url("/src/images/background5.jpg");
 
   background-repeat: no-repeat;
@@ -12,8 +15,7 @@ body {
 
 [class*="col-"] {
   padding: 10px;
-  border: 1px solidred;
-  border-width: thick;
+
   position: relative;
 }
 .form-base {
@@ -22,6 +24,11 @@ body {
   background: rgba(121, 120, 255, 0.3);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4.4px);
+}
+
+.AdminPage {
+  height: 100vh;
+  background-color: grey;
 }
 
 .activityBtn {
@@ -173,6 +180,10 @@ input {
   z-index: 1;
 }
 
+.table-responsive {
+  height: 300px;
+  overflow-y: scroll;
+}
 .coverDisplay {
   background: rgba(121, 116, 116, 0.4);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
@@ -181,6 +192,12 @@ input {
   height: 500px;
 
   z-index: 9;
+}
+#sidebarMenu {
+  position: absolute;
+  right: 0;
+  width: 30%;
+  z-index: 1;
 }
 
 .greeting {
@@ -263,6 +280,16 @@ input {
   border-radius: 15px;
   position: relative;
   width: 100%;
+}
+
+.view {
+  margin: 10px;
+  line-height: 4px;
+  font-size: 14px;
+  border-radius: 7px;
+  background: rgb(0, 234, 0);
+
+  padding: 3px 5px;
 }
 
 .container {
