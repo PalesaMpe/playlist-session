@@ -6,6 +6,7 @@ function Hash() {
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
+    console.log("hi");
 
     if (!token && hash) {
       token = hash
@@ -15,11 +16,14 @@ function Hash() {
         .split("=")[1];
 
       window.location.hash = "";
+
       window.localStorage.setItem("token", token);
     }
 
     window.location.href = window.localStorage.getItem("currentPage");
   }, []);
+
+  return <div>hi</div>;
 }
 
 export default Hash;

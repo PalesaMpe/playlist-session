@@ -38,6 +38,7 @@ function Study() {
       console.log(data);
     };
     if (token) {
+      setToken(token);
       getUser();
     }
   }, []);
@@ -97,6 +98,7 @@ function Study() {
   const searchTracks = async () => {
     var addedTime = 0;
     var timer = searchKey;
+    console.log("timker" + timer);
     var ms = toMilliseconds(timer);
 
     arrPlaylist = [];
@@ -115,7 +117,7 @@ function Study() {
     }
 
     arrPlaylist = arrPlaylist[0].concat(arrPlaylist[1]);
-    console.log(arrPlaylist);
+    console.log(ms);
 
     while (addedTime <= ms) {
       var index = Math.floor(Math.random() * arrPlaylist.length);
@@ -160,7 +162,7 @@ function Study() {
       <Header />
 
       <header className="App-header">
-        <h1>WELCOME {profile.display_name}</h1>
+        <h1 className="Welcome">WELCOME {profile.display_name}</h1>
         <div className="container conn1">
           <div className="row">
             <div className="col-lg-6">
@@ -178,15 +180,15 @@ function Study() {
                   <button className="btn btn-rounded mb-3 mt-3" type="submit">
                     Generate
                   </button>
-                  <input
-                    type="time"
-                    step={1}
-                    onChange={(e) => {
-                      setSearchKey(e.target.value);
-                      console.log(searchKey);
-                    }}
-                  />
-                </form>
+                </form>{" "}
+                <input
+                  type="time"
+                  className="form-control mb-3"
+                  step={1}
+                  onChange={(e) => {
+                    setSearchKey(e.target.value);
+                  }}
+                />
               </div>
               {!token ? (
                 <div>

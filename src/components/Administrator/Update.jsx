@@ -82,22 +82,39 @@ function Update() {
       });
   };
 
-  var createElements = (e) => {
-    var elements = [];
-    var index = 0;
-    console.log("sub" + enquiries[0]);
+  const clickedButton = async (e) => {
+    e.preventDefault();
+    console.log("clicked");
+    var view = document.getElementsByClassName("view");
 
-    for (var i = 0; i <= enquiries.length - 1; i++) {
+    for (let i = 0; i < view.length; i++) {
+      view[i].addEventListener("click", function () {
+        window.localStorage.setItem("enquiryID", i);
+      });
+    }
+  };
+
+  var createElements = () => {
+    var elements = [];
+    //var index = 0;
+    console.log("sub" + enquiries[0]);
+    let i = 0;
+
+    while (i < enquiries.length) {
       elements.push(
         <tr>
           <th scope="row">{i}</th>
           <td>{arrEmails[0][i].Email}</td>
           <td>{arrEmails[0][i].Name + " " + arrEmails[0][i].Surname}</td>
-          {console.log(i)}
-          <button className="view">View</button>
+
+          <button className={"view"} onClick={clickedButton}>
+            View
+          </button>
         </tr>
       );
+      i++;
     }
+
     return elements;
   };
 
@@ -167,12 +184,7 @@ function Update() {
                   <label>Newsletter</label>
                   <br />
                   <label name="user_email">palempe25@gmail.com</label>
-                  <textarea
-                    name="message"
-                    onChange={(e) => {
-                      setUpdateText(e.target.value);
-                    }}
-                  ></textarea>
+                  <textarea></textarea>
                 </div>
 
                 <div className="d-grid gap-2 mt-3">

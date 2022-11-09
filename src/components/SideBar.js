@@ -6,10 +6,7 @@ import * as Fi from "react-icons/fi";
 
 function SideBar(barIndex) {
   return (
-    <nav
-      id="sidebarMenu"
-      class="collapse d-lg-block sidebar collapse justify-content-end"
-    >
+    <nav id="sidebarMenu">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
           <a
@@ -62,6 +59,7 @@ function SideBar(barIndex) {
             <i class="fas fa-money-bill fa-fw me-3"></i>
             <span
               onClick={() => {
+                window.localStorage.removeItem("user");
                 window.localStorage.removeItem("token");
               }}
             >

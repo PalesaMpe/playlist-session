@@ -123,23 +123,6 @@ body {
   width: 100%;
 }
 
-.Sidebar {
-  padding: 25px 25px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.3);
-
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4.4px);
-  font-size: 24px;
-
-  font-weight: bold;
-  position: absolute;
-  right: 0;
-  min-height: 100%;
-  width: 20%;
-  z-index: 1;
-}
-
 input {
   display: none;
 }
@@ -194,10 +177,11 @@ input {
   z-index: 9;
 }
 #sidebarMenu {
-  position: absolute;
+  position: fixed;
   right: 0;
+  top: 50px;
   width: 30%;
-  z-index: 1;
+  z-index: 2;
 }
 
 .greeting {
@@ -229,6 +213,7 @@ input {
 }
 
 .navbar {
+  position: sticky;
   background: rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(1.5px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
@@ -242,6 +227,30 @@ input {
   color: white;
 }
 
+.Welcome {
+  color: white;
+  margin-top: 100px;
+}
+.enquiryText {
+  width: 70%;
+  height: 40%;
+  background-color: white;
+  font-size: large;
+  align-content: center;
+  align-self: center;
+  margin: 30px auto;
+
+  border-radius: 5px;
+}
+.conEnquiry {
+  width: 70%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
 .navbar {
   color: #61dafb;
 }
@@ -263,6 +272,9 @@ input {
 
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
   resize: none;
+}
+.navbar-toggler {
+  background-color: black;
 }
 
 .title {

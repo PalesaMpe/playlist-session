@@ -140,6 +140,15 @@ app.get("/enquiries", (req, res) => {
   });
 });
 
+app.get("/enquiry", (req, res) => {
+  const sqlInsert = "SELECT * FROM enquiries";
+
+  db.query(sqlInsert, (err, result) => {
+    if (!err) res.send(result);
+    else console.log(err);
+  });
+});
+
 app.get("/updates", (req, res) => {
   const sqlInsert = "SELECT * FROM updates";
 

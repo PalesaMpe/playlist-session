@@ -22,9 +22,10 @@ function Travel() {
 
   var arrTracks = [];
   var arrPlaylist = ["classical essential", "lofi beats", "Calming Acoustic"];
-  var currentPage = "/Study";
+  var currentPage = "/Travel";
 
   window.localStorage.setItem("currentPage", currentPage);
+  //setToken(window.localStorage.getItem("token"));
 
   useEffect(() => {
     let token = window.localStorage.getItem("token");
@@ -38,6 +39,7 @@ function Travel() {
       console.log(data);
     };
     if (token) {
+      setToken(token);
       getUser();
     }
   }, []);
@@ -199,7 +201,6 @@ function Travel() {
                     </a>
                   </div>
                   <Player accessToken={token} trackUri={playingTracks} />
-                  <a href="">Personalise Playlist?</a>
                 </div>
               ) : (
                 <div>

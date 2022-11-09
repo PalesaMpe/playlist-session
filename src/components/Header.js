@@ -4,30 +4,24 @@ import * as Cg from "react-icons/cg";
 import * as Bi from "react-icons/bi";
 import * as Fi from "react-icons/fi";
 import SideBar from "./SideBar";
+import * as Gi from "react-icons/gi";
 
 function Header() {
   const [showBar, setBar] = useState(false);
 
   const showSideBar = (e) => {
+    console.log("hi");
     e.preventDefault();
     setBar(!showBar);
   };
   return (
     <div>
-      <nav class="navbar navbar-expand-lg">
+      <nav class="navbar fixed-top navbar-expand-lg">
         <a class="navbar-brand" href="#">
           <h1>PLAYLIST SESSION </h1>
         </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button">
+          <span class="navbar-toggler-icon" onClick={showSideBar}></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -64,6 +58,10 @@ function Header() {
                 onClick={showSideBar}
               >
                 Profile
+              </button>
+              <Gi.GiHamburger />{" "}
+              <button class="navbar-toggler">
+                <span onClick={showSideBar}>{Gi.GiHamburger}</span>
               </button>
             </form>
           </div>
