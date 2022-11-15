@@ -4,59 +4,43 @@ import ImageSlider from "../ImageSlider";
 import { Link } from "react-router-dom";
 
 function Admin() {
-  const CLIENT_ID = "db03438a98c64224a6e4861ebf1b226e";
-  const REDIRECT_URI = "http://localhost:3000";
-  const AUTH_ENDPOINT = "http://accounts.spotify.com/authorize";
-  const RESPONSE_TYPE = "token";
-
-  const [token, setToken] = useState("");
-  const [users, setUsers] = useState([]);
-  const [email, setEmail] = useState("");
+  const [admins, setAdmins] = useState([]);
+  const [admin, setAdmin] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const hash = window.location.hash;
-    let token = window.localStorage.getItem("token");
+  window.localStorage.removeItem("role");
+  window.localStorage.removeItem("user");
+  window.localStorage.removeItem("adminActive");
+  document.body.style.background = `grey`;
 
-    if (!token && hash) {
-      token = hash
-        .substring(1)
-        .split("&")
-        .find((elem) => elem.startsWith("access_token"))
-        .split("=")[1];
-
-      window.location.hash = "";
-      window.localStorage.setItem("token", token);
-    }
-
-    setToken(token);
-  }, []);
-
-  const getUser = async (e) => {
+  const getAdmins = async (e) => {
     e.preventDefault();
-    axios.get("http://localhost:3001/users").then((response) => {
+    axios.get("http://localhost:3001/admins").then((response) => {
       console.log(response.data);
-      setUsers(response.data);
+      setAdmins(response.data);
     });
   };
 
-  const checkUser = async (e) => {
+  const checkAdmin = async (e) => {
     e.preventDefault();
-    for (var i = 0; i <= users.length - 1; i++) {
-      if (email == users[i].Email && password == users[i].Password) {
-        console.log("VALID");
-        window.localStorage.setItem(
-          "user",
-          JSON.stringify({
-            id: users[i].id,
-            name: users[i].Name,
-            surname: users[i].Surname,
-            email: users[i].Email,
-          })
-        );
+    var isValid = false;
+    for (var i = 0; i <= admins.length - 1; i++) {
+      if (admin == admins[i].adminID && password == admins[i].Password) {
+        isValid = true;
+        window.localStorage.setItem("currentAdmin", admins[i].adminID);
+        if (admin[0] == "H") {
+          window.localStorage.setItem("role", "Head");
+        }
+        window.localStorage.setItem("adminActive", true);
         window.location.href = "http://localhost:3000/Update";
         break;
+      } else {
+        isValid = false;
       }
+    }
+
+    if (isValid == false) {
+      alert("Invalid details");
     }
   };
 
@@ -96,13 +80,13 @@ function Admin() {
             <form className="Auth-form">
               <h1 className="title">Admin</h1>
               <div className="form-group mt-3">
-                <label>Email address</label>
+                <label>Admin ID</label>
                 <input
                   type="email"
                   className="form-control mt-1"
-                  placeholder="Enter email"
+                  placeholder="Admin ID"
                   onChange={(e) => {
-                    setEmail(e.target.value);
+                    setAdmin(e.target.value);
                   }}
                 />
               </div>
@@ -119,28 +103,21 @@ function Admin() {
                 />
               </div>
               <div className="d-grid gap-2 mt-3">
-                <button type="submit" className="loginBtn" onClick={getUser}>
+                <button type="submit" className="loginBtn" onClick={getAdmins}>
                   Submit
                 </button>
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  onClick={checkUser}
+                  onClick={checkAdmin}
                 >
                   Check
                 </button>
 
-                {users.map((val, key) => {
+                {admins.map((val, key) => {
                   return <div>{val.Email}</div>;
                 })}
               </div>
-              <p className="forgot-password text-right mt-2">
-                Forgot <a href="#">password?</a>
-              </p>
-              <p className="text-right mt-2">
-                Need an account?
-                <a href="/Signup">Sign Up</a>
-              </p>
             </form>
           </div>
         </div>

@@ -7,32 +7,32 @@ function Enquiry() {
   const [response, setResponse] = useState("");
   const [enquiry, setEnquiry] = useState("");
 
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [email, setEmail] = useState("");
-  const [enquiryText, setEnquiryText] = useState("");
-  const [dateSubmitted, setDateSubmitted] = useState();
-
   const form = useRef();
 
-  var enquiryIndex = window.localStorage.getItem("enquiryID");
+  var enquiryID = window.localStorage.getItem("enquiryID");
   useEffect(() => {
     const getEnquiries = async () => {
-      await axios.get("http://localhost:3001/enquiries").then((response) => {
-        console.log(response.data[enquiryIndex]);
-
-        setEnquiry(response.data[enquiryIndex]);
-      });
+      await axios
+        .get(`http://localhost:3001/enquiry/${enquiryID}`)
+        .then((response) => {
+          console.log(response.data[0]);
+          setEnquiry(response.data[0]);
+        });
     };
     getEnquiries();
-    setName(enquiry.Name);
-    console.log(name);
-    setSurname(enquiry.Surname);
+    console.log(enquiry);
     //setEmail(enquiry.Email);
-    setEmail("palempe25@gmail.com");
-    setEnquiryText(enquiry.Enquiry);
-    setDateSubmitted(enquiry.DateSubmitted);
   }, []);
+
+  const deleteEnquiry = async (e) => {
+    axios
+      .delete(`http://localhost:3001/deleteEnquiry/${enquiryID}`)
+      .then((response) => {
+        console.log("successes");
+      });
+    window.localStorage.removeItem("enquiryID");
+    window.location.href = "/Update";
+  };
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -50,7 +50,7 @@ function Enquiry() {
         .then(
           (result) => {
             console.log(result.text);
-            window.location.href = "/Update";
+            deleteEnquiry();
           },
           (error) => {
             console.log(error.text);
@@ -63,26 +63,24 @@ function Enquiry() {
       <div className="container">
         <div className="row">
           <div className="enquiryText">
-            From {name}
+            From {enquiry.Name}
             <br />
             <br />
-            {enquiryText}
+            {enquiry.Enquiry}
             <br />
             <br />
-            Date Submitted: {dateSubmitted}
+            Date Submitted: {enquiry.DateSubmitted}
           </div>
           <div className="col-lg-12">
-            <form ref={form} className="InfoDisplay" onSubmit={sendEmail}>
+            <form ref={form} className="InfoDisplay">
               <input
                 className="form-control mt-1"
-                placeholder="Enter password"
-                value={name}
+                value={`${enquiry.Name} ${enquiry.Surname}`}
                 name="user_name"
               />
               <input
                 className="form-control mt-1"
-                placeholder="Enter password"
-                value="palempe25@gmail.com"
+                value={enquiry.Email}
                 name="user_email"
               />
 
@@ -93,7 +91,7 @@ function Enquiry() {
                 }}
               ></textarea>
               <div className="d-grid gap-2 mt-3">
-                <button type="submit" className="loginBtn">
+                <button type="submit" className="loginBtn" onClick={sendEmail}>
                   Send
                 </button>
               </div>

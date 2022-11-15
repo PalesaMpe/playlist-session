@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import ImageSlider from "./ImageSlider";
 import { Link } from "react-router-dom";
+import image from "../images/background5.jpg";
 
 function Login() {
   const CLIENT_ID = "db03438a98c64224a6e4861ebf1b226e";
@@ -14,22 +15,13 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  window.localStorage.removeItem("user");
+  window.localStorage.removeItem("Active");
+  window.localStorage.removeItem("token");
+  window.localStorage.removeItem("spotify");
+
   useEffect(() => {
-    const hash = window.location.hash;
-    let token = window.localStorage.getItem("token");
-
-    if (!token && hash) {
-      token = hash
-        .substring(1)
-        .split("&")
-        .find((elem) => elem.startsWith("access_token"))
-        .split("=")[1];
-
-      window.location.hash = "";
-      window.localStorage.setItem("token", token);
-    }
-
-    setToken(token);
+    document.body.style.backgroundImage = `url('${image}')`;
   }, []);
 
   const getUser = async (e) => {
@@ -45,15 +37,8 @@ function Login() {
     for (var i = 0; i <= users.length - 1; i++) {
       if (email == users[i].Email && password == users[i].Password) {
         console.log("VALID");
-        window.localStorage.setItem(
-          "user",
-          JSON.stringify({
-            id: users[i].id,
-            name: users[i].Name,
-            surname: users[i].Surname,
-            email: users[i].Email,
-          })
-        );
+        window.localStorage.setItem("user", users[i].id);
+        window.localStorage.setItem("Active", true);
         window.location.href = "http://localhost:3000/main";
         break;
       }
@@ -61,7 +46,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="Login">
       <nav class="navbar navbar-expand-sm">
         <a class="navbar-brand" href="#">
           <h1>PLAYLIST SESSION</h1>

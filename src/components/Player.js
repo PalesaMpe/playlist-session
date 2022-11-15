@@ -15,7 +15,7 @@ export default function Player({ accessToken, trackUri }) {
           setPlay(false);
         }
       }}
-      play={Play}
+      play={true}
       uris={trackUri ? trackUri : []}
       initialVolume
     />

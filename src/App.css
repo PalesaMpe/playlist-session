@@ -1,13 +1,9 @@
-html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
-}
-body {
-  box-sizing: border-box;
-  background: url("/src/images/background5.jpg");
 
+  box-sizing: border-box;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -18,17 +14,12 @@ body {
 
   position: relative;
 }
-.form-base {
-  border-width: thick;
-  padding: 5px 10px 5px 10px;
-  background: rgba(121, 120, 255, 0.3);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4.4px);
-}
 
-.AdminPage {
-  height: 100vh;
-  background-color: grey;
+.adminLogout {
+  border-radius: 5px;
+  position: absolute;
+  margin: 25px;
+  bottom: 0;
 }
 
 .activityBtn {
@@ -39,43 +30,16 @@ body {
   font-size: 36px;
   font-weight: 600;
 }
-
-.loginBtn {
-  background-color: rgba(0, 0, 0, 0.598);
-  color: white;
-  border: none;
-
-  margin: 5px 0px;
-  border-radius: 15px;
-}
-.loginBtn:hover {
-  background-color: black;
-  color: white;
-  border: none;
-
-  margin: 5px 0px;
-  border-radius: 15px;
-}
 .activityBtn:hover {
   background-color: #ffffff;
 }
-
-.conn1 {
-  position: relative;
-  top: 100px;
-}
-
-.conn2 {
-  background-color: #61dafb;
-  position: absolute;
-  top: -150%;
-}
-
-.spotifyLink {
-  color: white;
-}
 .activityBackground {
   width: 100%;
+}
+
+.adminButtons {
+  display: flex;
+  justify-content: center;
 }
 .add-note {
   border-radius: 15px;
@@ -87,7 +51,6 @@ body {
   font-size: 100px;
   color: rgba(0, 0, 0, 0.5);
 }
-
 .App-header {
   height: 100%;
   display: flex;
@@ -96,11 +59,9 @@ body {
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
-
 .App-link {
   color: #61dafb;
 }
-
 .Auth-form {
   padding: 25px 50px;
   background: rgba(255, 255, 255, 0.4);
@@ -109,22 +70,6 @@ body {
   font-size: 24px;
   color: rgb(34, 34, 34);
   font-weight: bold;
-}
-
-.InfoDisplay {
-  padding: 25px 50px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4.4px);
-  font-size: 24px;
-  color: rgb(34, 34, 34);
-  font-weight: bold;
-  width: 100%;
-}
-
-input {
-  display: none;
 }
 .ButtonDisplay {
   padding: 25px 50px;
@@ -138,34 +83,38 @@ input {
   font-weight: bold;
   width: 100%;
 }
-
-[class*="rate-"] {
-  font-size: 30px;
+.btnDelete {
+  background-color: red;
+  margin: 5px;
+  width: 50%;
 }
-
-.close {
-  background-color: #61dafb;
-  cursor: pointer;
-  font-size: 20;
-  font-weight: 600;
-
-  position: absolute;
-  right: 5px;
+.btnUpdate {
+  background-color: green;
+  margin: 5px;
+  display: block;
+  width: 50%;
 }
-
-.display {
-  font-size: small;
+.conn1 {
   position: relative;
-  background-color: grey;
-  background-image: linear-gradient(to bottom, grey, #d8d3cd);
-  overflow-y: scroll;
-  height: 500px;
-  z-index: 1;
+  top: 100px;
 }
-
-.table-responsive {
-  height: 300px;
-  overflow-y: scroll;
+.conn2 {
+  background-color: #61dafb;
+  position: absolute;
+  top: -150%;
+}
+.conEnquiry {
+  width: 70%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+.container {
+  position: relative;
+  top: 100px;
 }
 .coverDisplay {
   background: rgba(121, 116, 116, 0.4);
@@ -176,14 +125,48 @@ input {
 
   z-index: 9;
 }
-#sidebarMenu {
-  position: fixed;
-  right: 0;
-  top: 50px;
-  width: 30%;
-  z-index: 2;
-}
+.close {
+  background-color: #61dafb;
+  cursor: pointer;
+  font-size: 20;
+  font-weight: 600;
 
+  position: absolute;
+  right: 5px;
+}
+.deleteBtn {
+  position: absolute;
+
+  bottom: 35px;
+  margin: 35px;
+}
+.display {
+  font-size: small;
+  position: relative;
+  background-color: grey;
+  background-image: linear-gradient(to bottom, grey, #d8d3cd);
+  overflow-y: scroll;
+  height: 500px;
+  z-index: 1;
+}
+.enquiryText {
+  width: 70%;
+  height: 40%;
+  background-color: white;
+  font-size: large;
+  align-content: center;
+  align-self: center;
+  margin: 30px auto;
+
+  border-radius: 5px;
+}
+.form-base {
+  border-width: thick;
+  padding: 5px 10px 5px 10px;
+  background: rgba(121, 120, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4.4px);
+}
 .greeting {
   font-size: 16px;
   margin: 0 0 25px 0;
@@ -191,7 +174,20 @@ input {
   display: flex;
   justify-content: center;
 }
-
+.InfoDisplay {
+  padding: 25px 50px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4.4px);
+  font-size: 24px;
+  color: rgb(34, 34, 34);
+  font-weight: bold;
+  width: 100%;
+}
+input {
+  display: none;
+}
 .Info-form {
   background: rgba(213, 139, 221, 0.3);
   backdrop-filter: blur(1.5px);
@@ -211,57 +207,135 @@ input {
 
   background: url("/src/images/music1.jpg");
 }
+.loginBtn {
+  background-color: rgba(0, 0, 0, 0.598);
+  color: white;
+  border: none;
 
+  margin: 5px 0px;
+  border-radius: 15px;
+}
+.loginBtn:hover {
+  background-color: black;
+  color: white;
+  border: none;
+
+  margin: 5px 0px;
+  border-radius: 15px;
+}
 .navbar {
   position: sticky;
   background: rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(1.5px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
-
 .navbar-brand h1 {
   color: white;
-}
-
-.nav-link h5 {
-  color: white;
-}
-
-.Welcome {
-  color: white;
-  margin-top: 100px;
-}
-.enquiryText {
-  width: 70%;
-  height: 40%;
-  background-color: white;
-  font-size: large;
-  align-content: center;
-  align-self: center;
-  margin: 30px auto;
-
-  border-radius: 5px;
-}
-.conEnquiry {
-  width: 70%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
 }
 .navbar {
   color: #61dafb;
 }
-
+.nav-link h5 {
+  color: white;
+}
 .notes {
   display: grid;
   grid-template-columns: repeat(auto-fill, 200px);
   padding: 24px;
   gap: 24px;
 }
+.rate {
+  border-radius: 30px;
+  margin: auto 5px;
+}
+.reviewText {
+  width: 100%;
+}
+.reviewDisplay {
+  height: 300px;
+  overflow-y: scroll;
+}
+.reviewBorder {
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+#sidebarMenu {
+  position: fixed;
+  right: 0;
+  top: 50px;
+  width: 30%;
+  z-index: 2;
+}
+.sortDrop {
+  border-radius: 10px;
+  color: blue;
+}
+.spotifyLink {
+  color: white;
+}
+.table-responsive {
+  height: 300px;
+  overflow-y: scroll;
+}
+.UpdateDisplay {
+  padding: 25px 50px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4.4px);
 
+  color: rgb(34, 34, 34);
+  font-weight: bold;
+  width: 100%;
+}
+.UpdateDisplay {
+  position: absolute;
+  top: 100px;
+  width: 55%;
+
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.updateText {
+  background-color: white;
+  font-size: large;
+  border-radius: 5px;
+}
+.Welcome {
+  color: white;
+  margin-top: 100px;
+}
+
+.logout {
+  position: relative;
+  top: 200px;
+}
+.logoutBtn {
+  position: absolute;
+
+  bottom: 0;
+  margin: 35px;
+}
+
+.navbar-toggler {
+  background-color: black;
+}
+.RegisterBtn {
+  background-color: rgba(0, 0, 0, 0.598);
+  color: white;
+  border: none;
+  height: 50px;
+  margin: 5px 0px;
+  border-radius: 15px;
+}
+.RegisterBtn:hover {
+  background-color: black;
+  color: white;
+  border: none;
+
+  margin: 5px 0px;
+  border-radius: 15px;
+}
 .sticky-note {
   height: 200px;
 
@@ -273,10 +347,6 @@ input {
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.3);
   resize: none;
 }
-.navbar-toggler {
-  background-color: black;
-}
-
 .title {
   font-size: 65px;
   font-family: "Dancing Script", cursive;
@@ -304,15 +374,6 @@ input {
   padding: 3px 5px;
 }
 
-.container {
-  position: relative;
-  top: 150px;
-}
-
-.logout {
-  position: relative;
-  top: 200px;
-}
 .test {
   position: absolute;
   top: 50%;

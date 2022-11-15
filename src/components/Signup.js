@@ -10,18 +10,50 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const addUser = async (e) => {
+  function checkExistingUser() {
+    const promise = axios.get(`http://localhost:3001/user/${email}`);
+
+    const dataPromise = promise.then((response) => response.data);
+
+    return dataPromise;
+  }
+
+  const addUser = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3001/addMe", {
-        name: name,
-        surname: surname,
-        email: email,
-        password: password,
-      })
-      .then(() => {
-        console.log("successes");
+
+    if (
+      !(
+        name.length == 0 ||
+        surname.length == 0 ||
+        email.length == 0 ||
+        surname.length == 0 ||
+        password.length == 0
+      )
+    ) {
+      checkExistingUser().then((data) => {
+        var i = data.length;
+        console.log("ii" + i);
+
+        if (i == 0) {
+          window.localStorage.removeItem("Count");
+          axios
+            .post("http://localhost:3001/addMe", {
+              name: name,
+              surname: surname,
+              email: email,
+              password: password,
+            })
+            .then(() => {
+              alert("Account Saved");
+              window.location.href = "/Login";
+            });
+        } else {
+          alert("Account already exists");
+        }
       });
+    } else {
+      alert("Please fill in all fields");
+    }
   };
 
   return (
@@ -34,7 +66,7 @@ function Signup() {
               <div className="col-lg-6">
                 <form className="Auth-form">
                   <h1 className="title">Sign Up</h1>
-                  <div className="form-group mt-3">
+                  <form>
                     <label>Name</label>
                     <input
                       type="name"
@@ -43,50 +75,54 @@ function Signup() {
                       }}
                       className="form-control mt-1"
                       placeholder="Enter name"
+                      required
                     />
-                  </div>
-                  <div className="form-group mt-3">
-                    <label>Surname</label>
-                    <input
-                      type="surname"
-                      onChange={(e) => {
-                        setSurname(e.target.value);
-                      }}
-                      className="form-control mt-1"
-                      placeholder="Enter surname"
-                    />
-                  </div>
-                  <div className="form-group mt-3">
-                    <label>Email address</label>
-                    <input
-                      type="email"
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                      }}
-                      className="form-control mt-1"
-                      placeholder="Enter email"
-                    />
-                  </div>
-                  <div className="form-group mt-3">
-                    <label>Password</label>
-                    <input
-                      type="password"
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
-                      className="form-control mt-1"
-                      placeholder="Enter password"
-                    />
-                  </div>
-                  <div className="d-grid gap-2 mt-3">
-                    <button
-                      type="submit"
-                      className="loginBtn"
-                      onClick={addUser}
-                    >
-                      Submit
-                    </button>
-                  </div>
+                    <div className="form-group mt-3">
+                      <label>Surname</label>
+                      <input
+                        type="surname"
+                        onChange={(e) => {
+                          setSurname(e.target.value);
+                        }}
+                        className="form-control mt-1"
+                        placeholder="Enter surname"
+                        required
+                      />
+                    </div>
+                    <div className="form-group mt-3">
+                      <label>Email address</label>
+                      <input
+                        type="email"
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                        }}
+                        className="form-control mt-1"
+                        placeholder="Enter email"
+                        required
+                      />
+                    </div>
+                    <div className="form-group mt-3">
+                      <label>Password</label>
+                      <input
+                        type="password"
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                        }}
+                        className="form-control mt-1"
+                        placeholder="Enter password"
+                        required
+                      />
+                    </div>
+                    <div className="d-grid gap-2 mt-3">
+                      <button
+                        type="submit"
+                        className="loginBtn"
+                        onClick={addUser}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
                 </form>
               </div>
               <div className="col-lg-6">

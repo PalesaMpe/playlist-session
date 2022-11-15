@@ -5,17 +5,23 @@ import * as Bi from "react-icons/bi";
 import * as Fi from "react-icons/fi";
 
 function SideBar(barIndex) {
+  var navigate = "";
+  if (window.localStorage.getItem("spotify")) {
+    navigate = "/SpotifyProfile";
+  } else {
+    navigate = "Profile";
+  }
   return (
     <nav id="sidebarMenu">
       <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
           <a
-            href="#"
+            href={navigate}
             class="list-group-item list-group-item-action py-2 ripple"
             aria-current="true"
           >
             <i class="fas fa-tachometer-alt fa-fw me-3"></i>
-            <span>Account</span>
+            <span>Profile</span>
           </a>
           <a
             href="#"
