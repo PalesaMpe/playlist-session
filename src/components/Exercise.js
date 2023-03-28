@@ -224,53 +224,6 @@ function Exercise() {
             </div>
           </div>
         </div>
-        <div className="conn2">
-          <div className="row">
-            <div className="col-lg-12 col-md-12">
-              <div className="user-preference">
-                <div className="close">&times;</div>
-
-                <h2>Unhappy with playlist?</h2>
-                <p> Enter details to improve generated playlists</p>
-                <form className="preferenceForm">
-                  <label>Favourite genre</label>
-                  <input list="genres" />
-                  <datalist id="genres">
-                    <option value="Alternative" />
-                    <option value="Ambient" />
-                    <option value="Amapiano" />
-                    <option value="Classical" />
-                    <option value="Chillwave" />
-                    <option value="Country" />
-                    <option value="Contemporary Jazz" />
-                    <option value="Deep House" />
-                    <option value="EDM" />
-                    <option value="RnB" />
-                    <option value="RnB" />
-                  </datalist>
-                </form>
-                <form className="preferenceForm">
-                  <label>Artists you like</label>
-                  <input list="artists" />
-                  <datalist id="artists">
-                    <option value="Alternative" />
-                    <option value="Ambient" />
-                    <option value="Amapiano" />
-                    <option value="Classical" />
-                    <option value="Chillwave" />
-                    <option value="Country" />
-                    <option value="Contemporary Jazz" />
-                    <option value="Deep House" />
-                    <option value="EDM" />
-                    <option value="RnB" />
-                    <option value="RnB" />
-                  </datalist>
-                </form>
-                <button>submit</button>
-              </div>
-            </div>
-          </div>
-        </div>
         <form className="logout">
           <Link to="/Login">
             <button className="logoutBtn" onClick={logout}>
